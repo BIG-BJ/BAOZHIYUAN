@@ -96,11 +96,11 @@ def visualize_attack(correlations, e, top_indices):
 
 # ===== 实验参数 =====
 
-m = 2
-n = 250
-t = 10
+m = 16
+n = 2688
+t = 150
 top_k = 128
-trials = 20
+trials = 100
 noise_levels = np.linspace(0, 2, 6)
 success_rates = []
 
