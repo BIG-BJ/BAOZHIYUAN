@@ -10,8 +10,7 @@ def generate_goppa_H(m, n, t):
     GF = galois.GF(q)
 
     while True:
-        g = galois.irreducible_poly(q, t)  # 旧版本调用
-        # 替代 replace=False：手动去重生成 L
+        g = galois.irreducible_poly(q, t) 
         while True:
             L = GF.Random(n)
             if len(set(L.tolist())) == n:
@@ -30,7 +29,7 @@ def generate_goppa_H(m, n, t):
     return H_bin
 
 
-# ===== 攻击部分（不变） =====
+# ===== 攻击部分 =====
 
 def generate_error_vector(n, t):
     e = np.zeros(n, dtype=int)
@@ -106,7 +105,7 @@ noise_levels = np.linspace(0, 2, 6)
 success_rates = []
 
 for noise in noise_levels:
-    print(f"▶ 正在运行 σ = {noise:.2f} ...")
+    print(f" σ = {noise:.2f} ...")
     rate = experiment(m, n, t, noise_std=noise, trials=trials, top_k=top_k)
     success_rates.append(rate)
 
