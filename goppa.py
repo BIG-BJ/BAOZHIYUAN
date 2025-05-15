@@ -31,20 +31,24 @@ def generate_goppa_H(m, n, t):
 
 # ===== 攻击部分 =====
 
+# 生成稀疏错误向量 e
 def generate_error_vector(n, t):
     e = np.zeros(n, dtype=int)
     pos = np.random.choice(n, size=t, replace=False)
     e[pos] = 1
     return e
-
+    
+# 计算 syndrome
 def compute_syndrome(H, e):
     return np.mod(H @ e, 2)
 
+# 模拟泄漏轨迹（海明重量+加噪声）
 def simulate_leakage(syndrome, noise_std):
     # 使用 syndrome 的 Hamming weight 模拟泄漏 + 噪声
     leakage = np.array(syndrome) + np.random.normal(0, noise_std, len(syndrome))
     return leakage
 
+# 执行攻击（计算所有位置的相关系数）
 def perform_attack(H, leakage, top_k=10):
     n = H.shape[1]
     correlations = []
@@ -57,9 +61,11 @@ def perform_attack(H, leakage, top_k=10):
     top_indices = np.argsort(correlations)[-top_k:]
     return np.array(correlations), top_indices
 
+# 判断攻击是否成功
 def evaluate_success(e, top_indices):
     return any(e[i] == 1 for i in top_indices)
 
+# 主函数：执行多次实验，统计成功率，并绘制单次攻击效果
 def experiment(m, n, t, noise_std, trials=20, top_k=10, plot_examples=3):
     H = generate_goppa_H(m, n, t)
     successes = 0
@@ -79,6 +85,7 @@ def experiment(m, n, t, noise_std, trials=20, top_k=10, plot_examples=3):
 
     return successes / trials
 
+# 绘制单次攻击效果图
 def visualize_attack(correlations, e, top_indices):
     n = len(correlations)
     x = np.arange(n)
