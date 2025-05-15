@@ -108,7 +108,7 @@ n = 2688
 t = 150
 top_k = 128
 trials = 100
-noise_levels = np.linspace(0, 2, 6)
+noise_levels = np.linspace(0, 2, 10)
 success_rates = []
 
 for noise in noise_levels:
