@@ -178,7 +178,7 @@ noise_levels = np.linspace(0, 2, 6)
 success_rates = []
 
 for noise in noise_levels:
-    print(f"▶ 正在运行 σ = {noise:.2f} ...")
+    print(f" σ = {noise:.2f} ...")
     rate = experiment(m, n, t, noise_std=noise, trials=trials, top_k=top_k,n_jobs=n_jobs)
     success_rates.append(rate)
 
